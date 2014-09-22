@@ -2,9 +2,12 @@
   (:require [compojure.core :refer :all]
             [compojure.handler :as handler]
             [compojure.route :as route]))
+  (use 'hiccup.core)
 
 (defroutes app-routes
-  (GET "/" [] "Hello World")
+  (GET "/" []
+    (html [:span {:class "foo"} "bar"])
+  )
   (GET "/:id" [id :as req]
     (str
       "<div style='width: 900px; margin: 20px auto;'>"

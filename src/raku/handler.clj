@@ -1,24 +1,39 @@
 (ns raku.handler
   (:require [compojure.core :refer :all]
             [compojure.handler :as handler]
-            [compojure.route :as route]))
-  (use 'hiccup.core)
+            [compojure.route :as route]
+            [hiccup.core :refer :all]
+            [dieter.core :refer [asset-pipeline]]))
+
+(defn link [url label]
+  [:a {:href url} label])
+
+(defn layout [body]
+  [:body
+    [:link {:rel "stylesheet" :href "/assets/main.scss"}]
+    [:script {:src "/assets/main.coffee"}]
+    [:div {:class "main"} [:div {:class "topbar"}
+      (link "/" "Home")
+      (link "/1" "One")
+      (link "/2" "Two")
+      (link "/3" "Three")]
+     [:div {:class "body"} body]]
+  ])
 
 (defroutes app-routes
   (GET "/" []
-    (html [:span {:class "foo"} "bar"])
-  )
+       (html (layout [:span "Hello there"]))
+       )
   (GET "/:id" [id :as req]
-    (str
-      "<div style='width: 900px; margin: 20px auto;'>"
-      "<table style='font-family: Helvetica Neue;'>"
-      (reduce (fn [n y] (str n "<tr><td style='width: 280px'>" (key y) "</td><td>" (val y) "</td></tr>")) "" req)
-      "</table>"
-      "</div>"
-    )
-  )
+       (html (layout [:div
+              [:ul
+               (map (fn [x] [:li [:strong (key x)] ": " (str (val x))]) (req :headers))]
+              ]))
+       )
   (route/resources "/")
   (route/not-found "Not Found"))
 
-(def app
-  (handler/site app-routes))
+(def app (->
+  (handler/site app-routes)
+  (asset-pipeline {})
+))

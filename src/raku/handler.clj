@@ -3,7 +3,8 @@
             [compojure.handler :as handler]
             [compojure.route :as route]
             [hiccup.core :refer :all]
-            [dieter.core :refer [asset-pipeline]]))
+            [dieter.core :refer [asset-pipeline]]
+            [dieter.asset.sass]))
 
 (defn link [url label]
   [:a {:href url} label])
@@ -20,6 +21,8 @@
      [:div {:class "body"} body]]
   ])
 
+(def asset-options {:compress true})
+
 (defroutes app-routes
   (GET "/" []
        (html (layout [:span "Hello there"]))
@@ -35,5 +38,5 @@
 
 (def app (->
   (handler/site app-routes)
-  (asset-pipeline {})
+  (asset-pipeline asset-options)
 ))

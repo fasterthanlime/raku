@@ -1,18 +1,25 @@
 
+$background-color: #222;
+$link-color: #ddd;
+
 .main {
   width: 500px;
   margin: 20px auto;
   padding: 20px;
-  background: #222;
+  background: $background-color;
   color: #eee;
   font-family: Helvetica Neue;
 }
 
 .topbar a {
-  color: #ddd;
+  color: $link-color;
   font-weight: bold;
   margin: 10px;
   text-decoration: none;
+
+  &:hover {
+    color: lighten($link-color, 10);
+  }
 }
 
 .body {

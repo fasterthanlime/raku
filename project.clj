@@ -6,7 +6,7 @@
                  [hiccup "1.0.5"]
                  [dieter "0.4.1"]
                  [org.clojars.fasterthanlime/dieter-sass "0.0.1"]
-                 [org.clojure/clojurescript "0.0-1896"]]
+                 [org.clojure/clojurescript "0.0-2342"]]
   :plugins [[lein-ring "0.8.11"]
             [lein-cljsbuild "1.0.3"]]
   :cljsbuild {

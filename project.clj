@@ -5,8 +5,17 @@
                  [compojure "1.1.8"]
                  [hiccup "1.0.5"]
                  [dieter "0.4.1"]
-                 [org.clojars.fasterthanlime/dieter-sass "0.0.1"]]
-  :plugins [[lein-ring "0.8.11"]]
+                 [org.clojars.fasterthanlime/dieter-sass "0.0.1"]
+                 [org.clojure/clojurescript "0.0-1896"]]
+  :plugins [[lein-ring "0.8.11"]
+            [lein-cljsbuild "1.0.3"]]
+  :cljsbuild {
+    :builds [{
+       :source-paths ["resources/scripts"]
+       :compiler {
+          :output-to "resources/assets/main.js"
+          :optimizations :whitespace
+          :pretty-print true}}]}
   :ring {:handler raku.handler/app}
   :profiles
   {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]
